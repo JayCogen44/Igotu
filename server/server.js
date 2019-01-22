@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const userController = require('./controllers/users-controller');
 const itemsController = require('./controllers/items-controller');
+const messagingController = require('./controllers/messaging-controller');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -20,6 +21,9 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-TypeError, Accept');
   next();
 });
+
+
+/* GET REQUESTS */
 
 app.get('/user/:email', (req, res, err) => {
   // joins user table and item table
@@ -42,6 +46,16 @@ app.get('/allItems', itemsController.getAllItems, (req, res, err) => {
   res.status(200).json(res.locals.items);
 });
 
+app.get('/convos/:userId', messagingController.getConvos, (req, res, err) => {
+  res.status(200).json(res.locals.convos);
+});
+
+app.get('/messages/:convoId', messagingController.getMessages, (req, res, err) => {
+  res.status(200).json(res.locals.messages);
+});
+
+/* POST REQUESTS */
+
 app.post('/addUser', userController.addUser, (req, res, err) => {
   res.status(200).json(res.locals.data);
 });
@@ -49,6 +63,18 @@ app.post('/addUser', userController.addUser, (req, res, err) => {
 app.post('/addItem', itemsController.addItem, (req, res, err) => {
   res.status(200).json(res.locals.data);
 });
+
+app.post('/addConvo', messagingController.createConvo, (req, res, err) => {
+  res.status(200).json(res.locals.convo)
+});
+
+app.post('/addMessage', messagingController.createMessage, (req, res, err) => {
+  res.status(200).json(res.locals.message);
+});
+
+
+
+/* DELETE REQUESTS */
 
 app.delete('/deleteItem', (req, res, err) => {
   // deletes item from database
