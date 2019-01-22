@@ -11,6 +11,7 @@ import Cards from './CardsContainer.jsx';
 import types from '../constants/actionTypes';
 import * as actions from '../actions/actions';
 import ItemForm from '../components/ItemForm.jsx';
+import MessagesContainer from './MessagesContainer.jsx';
 
 const mapStateToProps = store => ({
   cards: store.cards
@@ -64,14 +65,16 @@ class MainContainer extends Component {
             searchBoxChange={this.props.searchBoxChange}
           />
         </div>
-        <div id="cardsdiv">
+        {/* <div id="cardsdiv">
           <Cards
             items={this.props.cards.items}
             fetchFlag={this.props.cards.fetching}
             loading={this.props}
           />
-        </div>
-        <ItemForm addItem={this.props.addItem} />
+  
+        </div> */}
+        <MessagesContainer />
+        {/* <ItemForm addItem={this.props.addItem} /> */}
       </div>
     );
   }
