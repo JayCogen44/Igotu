@@ -19,6 +19,11 @@ export const searchValueChange = value => ({
   payload: value
 });
 
+export const showConvos = convos => ({
+  type: types.SEARCH_BOX_CHANGE,
+  payload: convos
+});
+
 export const fetchItemsData = () => dispatch => {
   dispatch(fetchItemsStart());
 
@@ -74,6 +79,18 @@ export const addItem = userObj => dispatch => {
     })
     .catch(() => dispatch(fetchError));
 };
+
+export const getConvos = () => (dispatch, getState) => {
+
+  fetch(`api/category/convos`)
+    .then(response => response.json())
+    .then(convos => {
+      console.log('we got the category items');
+      dispatch(showConvos(convos))
+      // dispatch(fetchedItems(data));
+    })
+    .catch(() => dispatch(fetchError));
+}
 
 // export const searchStart = query => ({
 //   type: types.SEARCH,

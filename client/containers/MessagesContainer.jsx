@@ -9,7 +9,9 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
+  getConvos: () => {
+    dispatch(actions.getConvos())
+  }
 });
 
 class MessagesContainer extends Component {
@@ -79,6 +81,10 @@ class MessagesContainer extends Component {
 
   handleConvoChange = (id) => {
     this.setState({currentConvo: id});
+  }
+
+  componentDidMount() {
+    this.props.getConvos();
   }
 
   render() {
