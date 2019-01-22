@@ -22,7 +22,7 @@ export const searchValueChange = value => ({
 export const fetchItemsData = () => dispatch => {
   dispatch(fetchItemsStart());
 
-  fetch('http://localhost:3000/allItems')
+  fetch('api/allItems')
     .then(response => response.json())
     .then(data => {
       console.log('we got the items');
@@ -34,7 +34,7 @@ export const fetchItemsData = () => dispatch => {
 export const fetchSearchedItems = search => dispatch => {
   dispatch(fetchItemsStart());
 
-  fetch(`http://localhost:3000/search/${search}`)
+  fetch(`api/search/${search}`)
     .then(response => response.json())
     .then(data => {
       console.log('we got the searched items');
@@ -46,11 +46,31 @@ export const fetchSearchedItems = search => dispatch => {
 export const fetchCategoryItems = category => dispatch => {
   dispatch(fetchItemsStart());
 
-  fetch(`http://localhost:3000/category/${category}`)
+  fetch(`api/category/${category}`)
     .then(response => response.json())
     .then(data => {
       console.log('we got the category items');
       dispatch(fetchedItems(data));
+    })
+    .catch(() => dispatch(fetchError));
+};
+
+export const addItem = userObj => dispatch => {
+  dispatch(fetchItemsStart());
+
+  fetch(`api/addItem`, {
+    headers: { 'Content-Type': 'application/json' },
+    mode: 'cors',
+    method: 'POST',
+    body: JSON.stringify(userObj)
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('we added a item');
+      dispatch({
+        type: types.ADDED_ITEM,
+        payload: data
+      });
     })
     .catch(() => dispatch(fetchError));
 };

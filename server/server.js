@@ -1,10 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const http = require('http');
 
 const app = express();
 const port = 3000;
-require('dotenv').config();
 const pg = require('pg');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -12,6 +12,7 @@ const userController = require('./controllers/users-controller');
 const itemsController = require('./controllers/items-controller');
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use((req, res, next) => {

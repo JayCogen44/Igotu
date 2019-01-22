@@ -33,8 +33,15 @@ module.exports = {
     ]
   },
   devServer: {
+    open: true,
     contentBase: path.resolve(__dirname, 'client'),
-    watchContentBase: true
+    watchContentBase: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        pathRewrite: { '^/api': '' }
+      }
+    }
   },
   plugins: [new htmlWebpackPlugin({ template: './client/index.html' })]
 };

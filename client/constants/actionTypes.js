@@ -4,3 +4,4 @@ export const GET_ALL_ITEMS_ERR = 'GET_ALL_ITEMS_ERR';
 export const SEARCH = 'SEARCH';
 export const LOGIN = 'LOGIN';
 export const SEARCH_BOX_CHANGE = 'SEARCH_BOX_CHANGE';
+export const ADDED_ITEM = 'ADDED_ITEM';

@@ -16,7 +16,6 @@ const initialState = {
 };
 
 const cardsReducer = (state = initialState, action) => {
-  console.log('running reducer:', action.type);
   switch (action.type) {
     case types.LOGIN:
       return {
@@ -44,7 +43,13 @@ const cardsReducer = (state = initialState, action) => {
         ...state,
         searchBoxValue: action.payload
       };
-
+    case types.ADDED_ITEM:
+      const newItems = state.items.slice();
+      newItems.push(action.payload);
+      return {
+        ...state,
+        items: newItems
+      }
     default:
       return state;
   }

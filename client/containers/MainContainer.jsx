@@ -12,10 +12,8 @@ import types from '../constants/actionTypes';
 import * as actions from '../actions/actions';
 import ItemForm from '../components/ItemForm.jsx';
 
-// use this.props.cards to access state in our components below
 const mapStateToProps = store => ({
   cards: store.cards
-  // search: store.search
 });
 
 // need to add all our action creators here
@@ -31,6 +29,18 @@ const mapDispatchToProps = dispatch => ({
   },
   fetchCategory: value => {
     dispatch(actions.fetchCategoryItems(value));
+  },
+  addItem: event => {
+    event.preventDefault();
+    const addItemForm = document.getElementById('addItemForm');
+    const formData = {
+      user_id: 1,
+      item_name: addItemForm.elements.name.value,
+      item_details: addItemForm.elements.desc.value,
+      price: addItemForm.elements.price.value,
+      photo: addItemForm.elements.url.value,
+    }
+    dispatch(actions.addItem(formData))
   }
 });
 
@@ -44,7 +54,6 @@ class MainContainer extends Component {
   }
 
   render() {
-    // console.log('here are ur props ',this.props.cards.items);
     return (
       <div>
         <div id="navdiv">
@@ -62,7 +71,7 @@ class MainContainer extends Component {
             loading={this.props}
           />
         </div>
-        <ItemForm />
+        <ItemForm addItem={this.props.addItem} />
       </div>
     );
   }

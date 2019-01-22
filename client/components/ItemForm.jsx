@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 
 const ItemForm = (props) => {
-  
+
   return (
-    <div id="modal-form">
+    <div id="modal-form" style={{ width: '500px', margin: '0 auto 30px' }}>
       <h3>Add an item</h3>
-      <form>
+      <form id='addItemForm'>
         Item Name<br></br>
-        <input type="text"></input>
+        <input type="text" name='name'></input>
         Description<br></br>
-        <textarea></textarea>
+        <textarea name='desc'></textarea>
         Price<br></br>
-        <input type="number"></input>
+        <input type="number" name='price'></input>
         Image Url<br></br>
-        <input type="url"></input>
-        <button></button>
+        <input type="url" name='url'></input>
+        <button onClick={props.addItem}>Add Item</button>
       </form>
     </div>
   )

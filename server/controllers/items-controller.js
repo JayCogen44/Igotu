@@ -1,13 +1,7 @@
-const pg = require('pg'); // postgres library
-
+const pool = require('../model/database');
 const itemController = {};
 
 itemController.getOneItem = (req, res, next) => {
-  const uri =
-  'postgresql://igotu:eyegotchu@igotu-master.cu4n5g8jahnw.us-west-2.rds.amazonaws.com:5432/igotu';
-  const pool = new pg.Pool({
-    connectionString: uri
-  });
   const query = {
     text: 'SELECT * FROM items WHERE id = $1',
     values: [req.params.id]
@@ -23,15 +17,11 @@ itemController.getOneItem = (req, res, next) => {
 };
 
 itemController.addItem = (req, res, next) => {
-  const uri =
-    'postgresql://igotu:eyegotchu@igotu-master.cu4n5g8jahnw.us-west-2.rds.amazonaws.com:5432/igotu';
-  const pool = new pg.Pool({
-    connectionString: uri
-  });
   const query = {
     text:
-      'INSERT INTO items(photo, price, item_name, item_details, created_at) VALUES($1, $2, $3, $4, $5) RETURNING *',
+      'INSERT INTO items(user_id, photo, price, item_name, item_details, created_at) VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
     values: [
+      req.body.user_id,
       req.body.photo,
       req.body.price,
       req.body.item_name,
@@ -50,11 +40,6 @@ itemController.addItem = (req, res, next) => {
 };
 
 itemController.getAllItems = (req, res, next) => {
-  const uri =
-    'postgresql://igotu:eyegotchu@igotu-master.cu4n5g8jahnw.us-west-2.rds.amazonaws.com:5432/igotu';
-  const pool = new pg.Pool({
-    connectionString: uri
-  });
   const query = {
     text: 'SELECT * FROM items'
   };
@@ -70,11 +55,6 @@ itemController.getAllItems = (req, res, next) => {
 };
 
 itemController.searchItem = (req, res, next) => {
-  const uri =
-    'postgresql://igotu:eyegotchu@igotu-master.cu4n5g8jahnw.us-west-2.rds.amazonaws.com:5432/igotu';
-  const pool = new pg.Pool({
-    connectionString: uri
-  });
   const query = {
     text: 'SELECT * FROM items WHERE item_name = $1',
     values: [req.params.item_name]
@@ -89,11 +69,6 @@ itemController.searchItem = (req, res, next) => {
 };
 
 itemController.searchCategory = (req, res, next) => {
-  const uri =
-    'postgresql://igotu:eyegotchu@igotu-master.cu4n5g8jahnw.us-west-2.rds.amazonaws.com:5432/igotu';
-  const pool = new pg.Pool({
-    connectionString: uri
-  });
   const query = {
     text: 'SELECT * FROM items WHERE category = $1',
     values: [req.params.category]
