@@ -5,12 +5,20 @@ import ConvosComponent from '../components/ConvosComponent.jsx'
 import MessagesComponent from '../components/MessagesComponent.jsx'
 
 const mapStateToProps = store => ({
-
+  convos: store.convos.convosArr,
+  messages: store.convos.messagesArr,
+  currentConvoID: store.convos.currentConvoID
 });
 
 const mapDispatchToProps = dispatch => ({
   getConvos: () => {
-    dispatch(actions.getConvos())
+    dispatch(actions.getConvos());
+  },
+  getMessagesForAConvo: (convoID) => {
+    dispatch(actions.getMessagesForAConvo(convoID));
+  },
+  postAMessageToConvo: (convoID) => {
+    dispatch(actions.postAMessageToConvo(convoID));
   }
 });
 
@@ -75,12 +83,27 @@ class MessagesContainer extends Component {
           convoID: 1,
         },
       ],
-      currentConvo: 0,
+      inputText: '',
+      currentConvoID: 0,
     }
   }
 
-  handleConvoChange = (id) => {
-    this.setState({currentConvo: id});
+  handleChange = (e) => {
+    e.preventDefault();
+    const newState = this.state;
+    newState[e.target.id] = e.target.value;
+    this.setState(newState);
+  };
+
+  handlePostMessage = () => {
+    console.log('clicked');
+    this.props.postAMessageToConvo(this.state.inputText);
+    this.setState({ ...this.state, inputText: ''});
+  }
+
+  handleConvoChange = (convoID) => {
+    // this.props.getMessagesForAConvo(convoID);
+    this.setState({currentConvoID: convoID});
   }
 
   componentDidMount() {
@@ -88,15 +111,22 @@ class MessagesContainer extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="messages-container">
         <ConvosComponent
           convos={this.state.convos}
+          // convos={this.props.convos}
           handleConvoChange={this.handleConvoChange}
         />
         <MessagesComponent 
           messages={this.state.messages}
-          currentConvo={this.state.currentConvo}
+          // messages={this.props.messagesArr}
+          handlePostMessage={this.handlePostMessage}
+          handleChange={this.handleChange}
+          inputText={this.state.inputText}
+          currentConvoID={this.state.currentConvoID}
+          // currentConvoID={this.props.currentConvoID}
         />
       </div>
     )

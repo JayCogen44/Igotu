@@ -20,9 +20,19 @@ export const searchValueChange = value => ({
 });
 
 export const showConvos = convos => ({
-  type: types.SEARCH_BOX_CHANGE,
+  type: types.SHOW_CONVOS,
   payload: convos
 });
+
+export const showConvoMessages = messages => ({
+  type: types.SHOW_CONVO_MESSAGES,
+  payload: messages
+});
+
+export const addOneMessageToCurrentMessages = message => ({
+  type: types.ADD_ONE_MESSAGE,
+  payload: message
+})
 
 export const fetchItemsData = () => dispatch => {
   dispatch(fetchItemsStart());
@@ -30,7 +40,6 @@ export const fetchItemsData = () => dispatch => {
   fetch('api/allItems')
     .then(response => response.json())
     .then(data => {
-      console.log('we got the items');
       dispatch(fetchedItems(data));
     })
     .catch(() => dispatch(fetchError));
@@ -42,7 +51,6 @@ export const fetchSearchedItems = search => dispatch => {
   fetch(`api/search/${search}`)
     .then(response => response.json())
     .then(data => {
-      console.log('we got the searched items');
       dispatch(fetchedItems(data));
     })
     .catch(() => dispatch(fetchError));
@@ -54,7 +62,6 @@ export const fetchCategoryItems = category => dispatch => {
   fetch(`api/category/${category}`)
     .then(response => response.json())
     .then(data => {
-      console.log('we got the category items');
       dispatch(fetchedItems(data));
     })
     .catch(() => dispatch(fetchError));
@@ -71,7 +78,6 @@ export const addItem = userObj => dispatch => {
   })
     .then(response => response.json())
     .then(data => {
-      console.log('we added a item');
       dispatch({
         type: types.ADDED_ITEM,
         payload: data
@@ -80,24 +86,63 @@ export const addItem = userObj => dispatch => {
     .catch(() => dispatch(fetchError));
 };
 
-export const getConvos = () => (dispatch, getState) => {
+/**
+ * =======================
+ * ==== CONVO ACTIONS ====
+ * =======================
+ */
 
-  fetch(`api/category/convos`)
+export const getConvos = () => (dispatch, getState) => {
+  const userID = getState().cards.user.id;
+  fetch(`api/convos/${userID}`)
     .then(response => response.json())
     .then(convos => {
-      console.log('we got the category items');
       dispatch(showConvos(convos))
-      // dispatch(fetchedItems(data));
     })
     .catch(() => dispatch(fetchError));
 }
 
-// export const searchStart = query => ({
-//   type: types.SEARCH,
-//   payload: query
-// });
+export const getMessagesForAConvo = (convoID) => (dispatch, getState) => {
+  fetch(`api/messages/${convoID}`)
+    .then(response => response.json())
+    .then(messages => {
+      dispatch(showConvoMessages(messages));
+    })
+    .catch(() => dispatch(fetchError));
+}
 
-// export const login = data => ({
-//   type: types.LOGIN,
-//   payload: data
-// });
+export const postConvo = (convoObj) => (dispatch, getState) => {
+  fetch(`api/addConvo`, {
+    headers: { 'Content-Type': 'application/json' },
+    mode: 'cors',
+    method: 'POST',
+    body: JSON.stringify(convoObj)
+  })
+    .then(response => response.json())
+    .then(convo => {
+      console.log('convoCreated', convo);
+    })
+    .catch(() => dispatch(fetchError));
+}
+
+export const postAMessageToConvo = (messageText) => (dispatch, getState) => {
+  const userID = getState().cards.user.id;
+  const convoID = getState().convos.currentConvoID;
+  const body = {
+    user_sent_id: userID,
+    convo_id: convoID,
+    message: messageText,
+    create_at: new Date()
+  }
+  fetch(`api/addMessage`, {
+    headers: { 'Content-Type': 'application/json' },
+    mode: 'cors',
+    method: 'POST',
+    body: JSON.stringify(body)
+  })
+    .then(response => response.json())
+    .then(message => {
+      dispatch(addOneMessageToCurrentMessages(message));
+    })
+    .catch(() => dispatch(fetchError));
+}
