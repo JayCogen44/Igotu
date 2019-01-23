@@ -4,7 +4,7 @@ import * as types from '../constants/actionTypes';
 const initialState = {
   convosArr: [],
   messagesArr: [],
-  currentConvoID: 4
+  currentConvoID: 0
 };
 
 const convosReducer = (state = initialState, action) => {
@@ -17,7 +17,8 @@ const convosReducer = (state = initialState, action) => {
     case types.SHOW_CONVO_MESSAGES:
       return {
         ...state,
-        messagesArr: action.payload
+        currentConvoID: action.payload.convoID,
+        messagesArr: action.payload.messages
       }
     case types.ADD_ONE_MESSAGE:
       return {
