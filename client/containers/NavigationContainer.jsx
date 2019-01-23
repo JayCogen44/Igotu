@@ -36,7 +36,7 @@ class NavigationContainer extends Component {
   render() {
     return (
       <div id="navdiv">
-        <NavigationComponent 
+        <NavigationComponent
           fetchSearchedItems={this.props.fetchSearchedItems}
           fetchCategory={this.props.fetchCategory}
           searchValue={this.props.cards.searchBoxValue}

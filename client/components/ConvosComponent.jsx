@@ -1,10 +1,12 @@
 import React from 'react';
 
 const ConvosComponent = (props) => {
+  console.log(props);
   const convos = props.convos.map((convo) => {
     return (
       <div key={convo.id} onClick={() => props.handleConvoChange(convo.id)}>
-        <h5>{convo.user_owner_id} > {convo.user_renter_id}</h5>
+        <h5>{convo.owner} > {convo.renter}</h5>
+        <p>{convo.item_name}</p>
         <p>{convo.created_at}</p>
       </div>
     )

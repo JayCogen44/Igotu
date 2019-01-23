@@ -4,6 +4,8 @@ import React from 'react';
 import Search from '../components/SearchBox.jsx';
 import SubNavigation from '../containers/SubNavContainer.jsx'
 import { Route, Link, withRouter } from 'react-router-dom';
+import logo from '../styles/assets/prestige_worldwide.jpg';
+
 
 
 const Navigation = props => (
@@ -12,11 +14,11 @@ const Navigation = props => (
     <div className="header-brand">
       <div className="nav_item no-hover">
         <a href="/">
-          <h6 className="title">igotu</h6>
+          <img className="logo" src={logo} alt="logo" />
         </a>
       </div>
     </div>
-    
+
     <div className="header-nav" id="header-menu">
       {/* Nav Left */}
       <div className="nav-left">

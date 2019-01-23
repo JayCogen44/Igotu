@@ -1,7 +1,10 @@
 import React from 'react';
 
 const MessagesComponent = (props) => {
-  const messagesArr = props.messagesArr.map((message, i) => <div key={message.id}> {message.user_sent_id} : {message.message}</div>)
+  const messagesArr = props.messagesArr.map((message, i) => (
+    <div key={message.id}> {message.user_name} : {message.message}</div>
+  )
+  );
   return (
     <div>
       <div className="messages-component">
