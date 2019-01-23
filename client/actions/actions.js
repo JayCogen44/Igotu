@@ -94,7 +94,7 @@ export const getConvos = () => (dispatch, getState) => {
 export const getMessagesForAConvo = (convoID) => (dispatch, getState) => {
   fetch(`api/messages/${convoID}`)
     .then(response => response.json())
-    .then(messages => dispatch(showConvoMessages({messages, convoID})))
+    .then(messages => dispatch(showConvoMessages({ messages, convoID })))
     .catch((err) => dispatch(fetchError));
 }
 
@@ -126,6 +126,6 @@ export const postAMessageToConvo = (messageText) => (dispatch, getState) => {
     body: JSON.stringify(body)
   })
     .then(response => response.json())
-    .then(message => dispatch(addOneMessageToCurrentMessages(message)))
+    //.then(message => dispatch(addOneMessageToCurrentMessages(message)))
     .catch(() => dispatch(fetchError));
 }
