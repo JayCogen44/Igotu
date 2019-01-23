@@ -6,7 +6,8 @@ const entry = ['./client/index.js'];
 
 const output = {
   path: path.resolve(__dirname, 'build'),
-  filename: 'build.js'
+  filename: 'build.js',
+  publicPath: '/',
 };
 
 module.exports = {
@@ -45,6 +46,7 @@ module.exports = {
     open: true,
     contentBase: path.resolve(__dirname, 'client'),
     watchContentBase: true,
+    historyApiFallback: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
