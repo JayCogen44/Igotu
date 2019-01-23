@@ -24,9 +24,9 @@ export const showConvos = convos => ({
   payload: convos
 });
 
-export const showConvoMessages = messages => ({
+export const showConvoMessages = convoObj => ({
   type: types.SHOW_CONVO_MESSAGES,
-  payload: messages
+  payload: convoObj
 });
 
 export const addOneMessageToCurrentMessages = message => ({
@@ -94,7 +94,7 @@ export const getConvos = () => (dispatch, getState) => {
 export const getMessagesForAConvo = (convoID) => (dispatch, getState) => {
   fetch(`api/messages/${convoID}`)
     .then(response => response.json())
-    .then(messages => dispatch(showConvoMessages(messages)))
+    .then(messages => dispatch(showConvoMessages({messages, convoID})))
     .catch((err) => dispatch(fetchError));
 }
 
