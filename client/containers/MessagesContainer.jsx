@@ -1,9 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
 import * as actions from '../actions/actions';
 import ConvosComponent from '../components/ConvosComponent.jsx'
 import MessagesComponent from '../components/MessagesComponent.jsx'
 import { Route, Link, withRouter } from 'react-router-dom';
+
+const socket = io('http://192.168.0.219:3000', { reconnection: true });
+
+
+/**************** WEB SOCKETS *****************/
+
+socket.on('connect', () => {
+  console.log(`Connected. ID: ${socket.id}`)
+  // const data = { stuff: 'whatever' }
+  // const receiver = resp => {
+  //   console.log('Server response:')
+  //   console.log(resp)
+  // }
+  socket.emit('client-connect', 'Hey from client');
+  socket.on('server-connect', (data) => {
+    console.log(data);
+  })
+});
+
+/*************** /WEB SOCKETS *****************/
 
 
 const mapStateToProps = store => ({
@@ -41,7 +62,7 @@ class MessagesContainer extends Component {
 
   handlePostMessage = () => {
     this.props.postAMessageToConvo(this.state.inputText);
-    this.setState({ ...this.state, inputText: ''});
+    this.setState({ ...this.state, inputText: '' });
   }
 
   handleConvoChange = (convoID) => {
@@ -59,7 +80,7 @@ class MessagesContainer extends Component {
           convos={this.props.convos}
           handleConvoChange={this.handleConvoChange}
         />
-        <MessagesComponent 
+        <MessagesComponent
           messagesArr={this.props.messagesArr}
           handlePostMessage={this.handlePostMessage}
           handleChange={this.handleChange}
@@ -69,6 +90,6 @@ class MessagesContainer extends Component {
       </div>
     )
   }
- }
+}
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MessagesContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MessagesContainer));
