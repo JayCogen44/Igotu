@@ -44,7 +44,6 @@ app.use(passport.session());
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 
-
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -53,6 +52,34 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.get("/login", (req, res) => {
+  res.status(200);
+  res.json({ what: "what" });
+});
+
+/* GET REQUESTS */
+
+app.get("/user/:email", (req, res, err) => {
+  // joins user table and item table
+  res.status(200);
+});
+
+app.get("/item/:id", itemsController.getOneItem, (req, res, err) => {
+  res.status(200).json(res.locals.oneItem);
+});
+
+app.get("/search/:item_name", itemsController.searchItem, (req, res, err) => {
+  res.status(200).json(res.locals.search);
+});
+
+app.get(
+  "/category/:category",
+  itemsController.searchCategory,
+  (req, res, err) => {
+    res.status(200).json(res.locals.category);
+  }
+);
 
 app.get("/allItems", itemsController.getAllItems, (req, res, err) => {
   res.status(200).json(res.locals.items);
