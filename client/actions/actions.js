@@ -32,7 +32,7 @@ export const showConvoMessages = convoObj => ({
 export const addOneMessageToCurrentMessages = message => ({
   type: types.ADD_ONE_MESSAGE,
   payload: message
-})
+});
 
 export const fetchItemsData = () => dispatch => {
   dispatch(fetchItemsStart());
