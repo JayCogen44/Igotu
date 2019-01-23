@@ -2,15 +2,15 @@
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
 import Search from '../components/SearchBox.jsx';
-import SubNavigation from './SubNavContainer.jsx'
-// import * as actions from '../constants/actionTypes';
+import SubNavigation from './SubNavContainer.jsx';
+import logo from '../styles/assets/prestige_worldwide.jpg';
 
 const Navigation = props => (
   <div id="nav-bar" className="header header-fixed unselectable header-animated">
     <div className="header-brand">
       <div className="nav_item no-hover">
         <a href="/">
-          <h6 className="title">igotu</h6>
+          <img className="logo" src={logo} alt="logo" />
         </a>
       </div>
     </div>
