@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
 import * as actions from '../actions/actions';
 import ConvosComponent from '../components/ConvosComponent.jsx'
 import MessagesComponent from '../components/MessagesComponent.jsx'
@@ -21,14 +22,41 @@ const mapDispatchToProps = dispatch => ({
   },
   postAMessageToConvo: (convoID) => {
     dispatch(actions.postAMessageToConvo(convoID));
+  },
+  addNewMessage: (message) => {
+    dispatch(actions.addOneMessageToCurrentMessages(message));
   }
 });
+
+
 
 class MessagesContainer extends Component {
   constructor(props) {
     super(props);
+    this.socket = io('http://192.168.0.219:5000');
     this.state = {
       inputText: ''
+    }
+  }
+
+  connectToSocket = (connect) => {
+    if (connect === true) {
+      this.socket.on('connect', () => {
+
+        //const socket = io('http://192.168.0.219:3000');
+        console.log(`Connected. ID: ${this.socket.id}`)
+        this.socket.emit('client-connect', 'Hey from client');
+        this.socket.on('server-connect', (data) => {
+          console.log(data);
+        })
+        this.socket.on('message', (message) => {
+          console.log('message from io: ', message);
+          this.props.addNewMessage(message);
+        });
+      });
+    } else {
+      console.log('unmounting');
+      this.socket.disconnect(true);
     }
   }
 
@@ -41,7 +69,7 @@ class MessagesContainer extends Component {
 
   handlePostMessage = () => {
     this.props.postAMessageToConvo(this.state.inputText);
-    this.setState({ ...this.state, inputText: ''});
+    this.setState({ ...this.state, inputText: '' });
   }
 
   handleConvoChange = (convoID) => {
@@ -50,6 +78,11 @@ class MessagesContainer extends Component {
 
   componentDidMount() {
     this.props.getConvos();
+    this.connectToSocket(true);
+  }
+
+  componentWillUnmount() {
+    this.connectToSocket(false);
   }
 
   render() {
@@ -59,7 +92,7 @@ class MessagesContainer extends Component {
           convos={this.props.convos}
           handleConvoChange={this.handleConvoChange}
         />
-        <MessagesComponent 
+        <MessagesComponent
           messagesArr={this.props.messagesArr}
           handlePostMessage={this.handlePostMessage}
           handleChange={this.handleChange}
@@ -69,6 +102,7 @@ class MessagesContainer extends Component {
       </div>
     )
   }
- }
+}
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MessagesContainer));
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MessagesContainer));

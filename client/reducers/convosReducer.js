@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const convosReducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case types.SHOW_CONVOS:
       return {
         ...state,
@@ -21,13 +21,17 @@ const convosReducer = (state = initialState, action) => {
         messagesArr: action.payload.messages
       }
     case types.ADD_ONE_MESSAGE:
+      let messagesArr = state.messagesArr.slice();
+      if (state.currentConvoID === action.payload.convo_id) {
+        messagesArr.push(action.payload);
+      }
       return {
         ...state,
-        messagesArr: [ ...state.messagesArr, action.payload]
+        messagesArr
       }
     default:
       return state;
-      
+
   }
 }
 
