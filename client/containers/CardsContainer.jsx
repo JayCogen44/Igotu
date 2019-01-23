@@ -1,59 +1,56 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
-import Card from '../components/Card.jsx';
+import CardsComponent from '../components/CardsComponent.jsx'
+import { connect } from 'react-redux';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import ItemForm from '../components/ItemForm.jsx'
+import * as actions from '../actions/actions';
 
-const uuid = require('uuid/v1');
+const mapStateToProps = store => ({
+  cards: store.cards
+});
 
-const CardsContainer = props => {
-
-  const createCard = item => {
-    return <Card key={uuid()} info={item} />;
-  };
-
-  const cards = props.items.map(createCard);
-
-  const cardRows = [];
-
-  let counter = 0;
-
-  for (let i = 0; i <= cards.length / 4; i++) {
-    const currentCards = [];
-
-    for (let j = 0; j < 4; j++) {
-      currentCards.push(cards[counter]);
-      counter++;
+// need to add all our action creators here
+const mapDispatchToProps = dispatch => ({
+  fetchAllItems: () => {
+    dispatch(actions.fetchItemsData());
+  },
+  addItem: event => {
+    event.preventDefault();
+    const addItemForm = document.getElementById('addItemForm');
+    const formData = {
+      user_id: 1,
+      item_name: addItemForm.elements.name.value,
+      item_details: addItemForm.elements.desc.value,
+      price: addItemForm.elements.price.value,
+      photo: addItemForm.elements.url.value,
     }
+    dispatch(actions.addItem(formData))
+  }
+});
 
-    const currentRow = (
-      <div className="row" key={uuid()}>
-        {' '}
-        {currentCards}
-      </div>
-    );
-    cardRows.push(currentRow);
+class CardsContainer extends Component {
+  constructor(props) {
+    super(props);
+
   }
 
-  let Loading;
+  componentWillMount() {
+    this.props.fetchAllItems();
+  }
 
-  if (props.fetchFlag) {
-    Loading = (
-      <div className="col-fluid">
-        <button
-          className="animated loading center loading-white loading-right white"
-          id="loadButton"
-        >
-          Loading Data
-        </button>
+  render() {
+    return (
+      <div>
+        <CardsComponent 
+          items={this.props.cards.items}
+          fetchFlag={this.props.cards.fetching}
+          loading={this.props}
+        />
+        <ItemForm addItem={this.props.addItem} />
       </div>
     );
   }
+}
 
-  return (
-    <div className="card-container">
-      {Loading}
-      {cardRows}
-    </div>
-  );
-};
-
-export default CardsContainer;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CardsContainer));

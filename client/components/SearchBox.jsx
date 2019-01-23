@@ -1,13 +1,15 @@
 import React from 'react';
 
 const Search = props => {
+  
   function handleChange(e) {
-    console.log(e.target.value);
     props.searchBoxChange(e.target.value);
   }
+
   function clearTextBox() {
     props.searchBoxChange();
   }
+
   return (
     <div id="search-bar">
       <form

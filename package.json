@@ -34,6 +34,7 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",
     "redux-thunk": "^2.3.0",
+    "url-loader": "^1.1.2",
     "uuid": "^3.3.2",
     "whatwg-fetch": "^3.0.0"
   },
@@ -41,6 +42,7 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
     "html-webpack-plugin": "^3.2.0",

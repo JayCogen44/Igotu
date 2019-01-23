@@ -21,7 +21,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/env', '@babel/react']
+            presets: ['@babel/env', '@babel/react'],
+            plugins: ['@babel/plugin-proposal-class-properties']
           }
         }
       },
@@ -29,6 +30,14 @@ module.exports = {
         test: /\.(less|css)$/,
         exclude: /node_modules/,
         use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'less-loader' }]
+      },
+      {
+        test: /\.(pdf|jpg|png|gif|svg|ico)$/,
+        use: [
+          {
+            loader: 'url-loader'
+          },
+        ]
       }
     ]
   },
