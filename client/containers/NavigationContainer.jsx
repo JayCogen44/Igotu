@@ -1,76 +1,50 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/self-closing-comp */
-import React from 'react';
-import Search from '../components/SearchBox.jsx';
-import SubNavigation from './SubNavContainer.jsx';
-import logo from '../styles/assets/prestige_worldwide.jpg';
+import React, { Component } from 'react';
+import SubNavigation from './SubNavContainer.jsx'
+import { connect } from 'react-redux';
+import NavigationComponent from '../components/NavigationComponent.jsx'
+import { BrowserRouter as Router, Route, Link, withRouter } from 'react-router-dom';
+import * as actions from '../actions/actions';
 
-const Navigation = props => (
-  <div id="nav-bar" className="header header-fixed unselectable header-animated">
-    <div className="header-brand">
-      <div className="nav_item no-hover">
-        <a href="/">
-          <img className="logo" src={logo} alt="logo" />
-        </a>
-      </div>
-    </div>
-    <div className="header-nav" id="header-menu">
-      <div className="nav-left" />
-      <div className="nav-center">
-        <div className="nav-item no-hover" id="header-search">
-          <Search
-            fetchSearchedItems={props.fetchSearchedItems}
-            searchValue={props.searchValue}
-            searchBoxChange={props.searchBoxChange}
-          />
-        </div>
-      </div>
-      <div className="nav-right">
-        <div className="nav-item has-sub toggle-hover" id="dropdown">
-          <a className="nav-dropdown-link">Categories</a>
-          <ul className="dropdown-menu dropdown-animated" role="menu">
-            <li role="menu-item">
-              <center>
-                <a href="/">Show All</a>
-              </center>
-            </li>
-            <li
-              role="menu-item"
-              onClick={() => {
-                props.fetchCategory('outdoor');
-              }}
-            >
-              <center>Outdoor</center>
-            </li>
-            <li
-              role="menu-item"
-              onClick={() => {
-                props.fetchCategory('household');
-              }}
-            >
-              <center>Household</center>
-            </li>
-            <li
-              role="menu-item"
-              onClick={() => {
-                props.fetchCategory('entertainment');
-              }}
-            >
-              <center>Entertainment</center>
-            </li>
-            <li
-              role="menu-item"
-              onClick={() => {
-                props.fetchCategory('toys');
-              }}
-            >
-              <center>Toys</center>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+const mapStateToProps = store => ({
+  cards: store.cards
+});
 
-export default Navigation;
+// need to add all our action creators here
+const mapDispatchToProps = dispatch => ({
+  fetchAllItems: () => {
+    dispatch(actions.fetchItemsData());
+  },
+  fetchSearchedItems: value => {
+    dispatch(actions.fetchSearchedItems(value));
+  },
+  searchBoxChange: value => {
+    dispatch(actions.searchValueChange(value));
+  },
+  fetchCategory: value => {
+    dispatch(actions.fetchCategoryItems(value));
+  }
+});
+
+class NavigationContainer extends Component {
+  constructor(props) {
+    super(props);
+
+  }
+
+  render() {
+    return (
+      <div id="navdiv">
+        <NavigationComponent
+          fetchSearchedItems={this.props.fetchSearchedItems}
+          fetchCategory={this.props.fetchCategory}
+          searchValue={this.props.cards.searchBoxValue}
+          searchBoxChange={this.props.searchBoxChange}
+        />
+      </div>
+    )
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavigationContainer));

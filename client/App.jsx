@@ -1,8 +1,9 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, withRouter } from 'react-router-dom';
 import MainContainer from './containers/MainContainer.jsx';
+import NavigationContainer from './containers/NavigationContainer.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -12,7 +13,10 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div><MainContainer /></div>
+        <div>
+          <NavigationContainer/>
+          <MainContainer />
+        </div>
       </Router>
     );
   }

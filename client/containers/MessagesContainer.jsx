@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import ConvosComponent from '../components/ConvosComponent.jsx'
 import MessagesComponent from '../components/MessagesComponent.jsx'
+import { Route, Link, withRouter } from 'react-router-dom';
+
 
 const mapStateToProps = store => ({
   convos: store.convos.convosArr,
@@ -69,7 +71,4 @@ class MessagesContainer extends Component {
   }
  }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MessagesContainer);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MessagesContainer));
