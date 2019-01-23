@@ -31,8 +31,12 @@ messagingController.getConvos = (req, res, next) => {
 
 messagingController.getMessages = (req, res, next) => {
     const query = {
-        text: `SELECT * FROM messages
-               WHERE convo_id = $1`,
+        text: `SELECT users.user_name, messages.message, messages.created_at, messages.id  
+               FROM messages
+               INNER JOIN users
+               ON (messages.user_sent_id = users.id)
+               WHERE convo_id = $1
+               ORDER BY messages.created_at ASC`,
         values: [
             req.params.convoId
         ]
@@ -41,7 +45,6 @@ messagingController.getMessages = (req, res, next) => {
         if (err) {
             console.log(`Error when getting messages: ${err}`);
         } else {
-            console.log(messages.rows);
             res.locals.messages = messages.rows;
             next();
         }
