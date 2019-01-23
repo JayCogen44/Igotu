@@ -5,7 +5,8 @@ const initialState = {
   items: [],
   user: {
     name: '',
-    email: ''
+    email: '',
+    id: 1
   },
   cards: [],
   modalStatus: false,

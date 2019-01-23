@@ -3,9 +3,7 @@ const messagingController = {};
 
 messagingController.getConvos = (req, res, next) => {
     const query = {
-        text: 'SELECT * FROM convos' +
-            'WHERE user_owner_id = $1' +
-            'OR user_renter_id = $1',
+        text: 'SELECT * FROM convos WHERE user_owner_id = $1 OR user_renter_id = $1',
         values: [
             req.params.userId
         ]
@@ -22,8 +20,7 @@ messagingController.getConvos = (req, res, next) => {
 
 messagingController.getMessages = (req, res, next) => {
     const query = {
-        text: 'SELECT * FROM messages' +
-            'WHERE convo_id = $1',
+        text: 'SELECT * FROM messages WHERE convo_id = $1',
         values: [
             req.params.convoId
         ]
@@ -32,15 +29,16 @@ messagingController.getMessages = (req, res, next) => {
         if (err) {
             console.log(`Error when getting messages: ${err}`);
         } else {
+            console.log(messages.rows);
             res.locals.messages = messages.rows;
+            next();
         }
     });
 }
 
 messagingController.createConvo = (req, res, next) => {
     const query = {
-        text: 'INSERT INTO convos(user_owner_id, user_renter_id, item_id, created_at)' +
-            'VALUES($1, $2, $3, $4) RETURNING *',
+        text: 'INSERT INTO convos(user_owner_id, user_renter_id, item_id, created_at) VALUES($1, $2, $3, $4) RETURNING *',
         values: [
             req.body.user_owner_id,
             req.body.user_renter_id,
@@ -61,8 +59,7 @@ messagingController.createConvo = (req, res, next) => {
 
 messagingController.createMessage = (req, res, next) => {
     const query = {
-        text: 'INSERT INTO messages(convo_id, user_sent_id, message, created_at)' +
-            'VALUES($1,$2,$3,$4) RETURNING *',
+        text: 'INSERT INTO messages(convo_id, user_sent_id, message, created_at) VALUES($1,$2,$3,$4) RETURNING *',
         values: [
             req.body.convo_id,
             req.body.user_sent_id,

@@ -7,7 +7,6 @@ itemController.getOneItem = (req, res, next) => {
     values: [req.params.id]
   };
   pool.query(query.text, query.values, (err, items) => {
-    console.log('These are the items: ', items);
     if (err) {
     } else {
       res.locals.oneItem = items.rows;
@@ -47,7 +46,6 @@ itemController.getAllItems = (req, res, next) => {
     if (err) {
       console.log(`Here's the error: ${err}`);
     } else {
-      console.log(items.rows);
       res.locals.items = items.rows;
       next();
     }
