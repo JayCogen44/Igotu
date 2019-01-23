@@ -36,40 +36,30 @@ export const addOneMessageToCurrentMessages = message => ({
 
 export const fetchItemsData = () => dispatch => {
   dispatch(fetchItemsStart());
-
   fetch('api/allItems')
     .then(response => response.json())
-    .then(data => {
-      dispatch(fetchedItems(data));
-    })
+    .then(data => dispatch(fetchedItems(data)))
     .catch(() => dispatch(fetchError));
 };
 
 export const fetchSearchedItems = search => dispatch => {
   dispatch(fetchItemsStart());
-
   fetch(`api/search/${search}`)
     .then(response => response.json())
-    .then(data => {
-      dispatch(fetchedItems(data));
-    })
+    .then(data => dispatch(fetchedItems(data)))
     .catch(() => dispatch(fetchError));
 };
 
 export const fetchCategoryItems = category => dispatch => {
   dispatch(fetchItemsStart());
-
   fetch(`api/category/${category}`)
     .then(response => response.json())
-    .then(data => {
-      dispatch(fetchedItems(data));
-    })
+    .then(data => dispatch(fetchedItems(data)))
     .catch(() => dispatch(fetchError));
 };
 
 export const addItem = userObj => dispatch => {
   dispatch(fetchItemsStart());
-
   fetch(`api/addItem`, {
     headers: { 'Content-Type': 'application/json' },
     mode: 'cors',
@@ -97,25 +87,15 @@ export const getConvos = () => (dispatch, getState) => {
   console.log('userID', userID)
   fetch(`api/convos/${userID}`)
     .then(response => response.json())
-    .then(convos => {
-      console.log('convos', convos)
-      dispatch(showConvos(convos))
-    })
+    .then(convos => dispatch(showConvos(convos)))
     .catch(() => dispatch(fetchError));
 }
 
 export const getMessagesForAConvo = (convoID) => (dispatch, getState) => {
-  console.log("convoID from action", convoID);
   fetch(`api/messages/${convoID}`)
     .then(response => response.json())
-    .then(messages => {
-      console.log('messages', messages);
-      dispatch(showConvoMessages(messages));
-    })
-    .catch((err) => {
-      console.log(err)
-      dispatch(fetchError)
-    });
+    .then(messages => dispatch(showConvoMessages(messages)))
+    .catch((err) => dispatch(fetchError));
 }
 
 export const postConvo = (convoObj) => (dispatch, getState) => {
@@ -126,9 +106,7 @@ export const postConvo = (convoObj) => (dispatch, getState) => {
     body: JSON.stringify(convoObj)
   })
     .then(response => response.json())
-    .then(convo => {
-      console.log('convoCreated', convo);
-    })
+    .then(convo => console.log('convoCreated', convo))
     .catch(() => dispatch(fetchError));
 }
 
@@ -148,9 +126,6 @@ export const postAMessageToConvo = (messageText) => (dispatch, getState) => {
     body: JSON.stringify(body)
   })
     .then(response => response.json())
-    .then(message => {
-      console.log('oneMessage', message);
-      dispatch(addOneMessageToCurrentMessages(message));
-    })
+    .then(message => dispatch(addOneMessageToCurrentMessages(message)))
     .catch(() => dispatch(fetchError));
 }
