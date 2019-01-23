@@ -1,14 +1,12 @@
 import React from 'react';
 
 const MessagesComponent = (props) => {
+  const messagesArr = props.messagesArr.map((message, i) => <div key={message.id}> {message.user_sent_id} : {message.message}</div>)
   console.log(props);
-  const messages = props.messages.filter((message) => message.convoID === props.currentConvoID)
-    .map((message, i) => <div key={i}> {message.userSent} : {message.text}</div>)
-
   return (
     <div>
       <div className="messages-component">
-        {messages}
+        {messagesArr}
       </div>
       <input id="inputText" value={props.inputText} onChange={props.handleChange}></input>
       <button onClick={props.handlePostMessage}>Send</button>

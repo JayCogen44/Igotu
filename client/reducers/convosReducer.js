@@ -4,7 +4,7 @@ import * as types from '../constants/actionTypes';
 const initialState = {
   convosArr: [],
   messagesArr: [],
-  currentConvoID: 1
+  currentConvoID: 4
 };
 
 const convosReducer = (state = initialState, action) => {

@@ -94,21 +94,28 @@ export const addItem = userObj => dispatch => {
 
 export const getConvos = () => (dispatch, getState) => {
   const userID = getState().cards.user.id;
+  console.log('userID', userID)
   fetch(`api/convos/${userID}`)
     .then(response => response.json())
     .then(convos => {
+      console.log('convos', convos)
       dispatch(showConvos(convos))
     })
     .catch(() => dispatch(fetchError));
 }
 
 export const getMessagesForAConvo = (convoID) => (dispatch, getState) => {
+  console.log("convoID from action", convoID);
   fetch(`api/messages/${convoID}`)
     .then(response => response.json())
     .then(messages => {
+      console.log('messages', messages);
       dispatch(showConvoMessages(messages));
     })
-    .catch(() => dispatch(fetchError));
+    .catch((err) => {
+      console.log(err)
+      dispatch(fetchError)
+    });
 }
 
 export const postConvo = (convoObj) => (dispatch, getState) => {
@@ -142,6 +149,7 @@ export const postAMessageToConvo = (messageText) => (dispatch, getState) => {
   })
     .then(response => response.json())
     .then(message => {
+      console.log('oneMessage', message);
       dispatch(addOneMessageToCurrentMessages(message));
     })
     .catch(() => dispatch(fetchError));

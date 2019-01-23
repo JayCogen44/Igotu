@@ -6,7 +6,7 @@ import MessagesComponent from '../components/MessagesComponent.jsx'
 
 const mapStateToProps = store => ({
   convos: store.convos.convosArr,
-  messages: store.convos.messagesArr,
+  messagesArr: store.convos.messagesArr,
   currentConvoID: store.convos.currentConvoID
 });
 
@@ -96,14 +96,13 @@ class MessagesContainer extends Component {
   };
 
   handlePostMessage = () => {
-    console.log('clicked');
     this.props.postAMessageToConvo(this.state.inputText);
     this.setState({ ...this.state, inputText: ''});
   }
 
   handleConvoChange = (convoID) => {
-    // this.props.getMessagesForAConvo(convoID);
-    this.setState({currentConvoID: convoID});
+    this.props.getMessagesForAConvo(convoID);
+    // this.setState({currentConvoID: convoID});
   }
 
   componentDidMount() {
@@ -111,22 +110,21 @@ class MessagesContainer extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="messages-container">
         <ConvosComponent
-          convos={this.state.convos}
-          // convos={this.props.convos}
+          // convos={this.state.convos}
+          convos={this.props.convos}
           handleConvoChange={this.handleConvoChange}
         />
         <MessagesComponent 
-          messages={this.state.messages}
-          // messages={this.props.messagesArr}
+          // messages={this.state.messages}
+          messagesArr={this.props.messagesArr}
           handlePostMessage={this.handlePostMessage}
           handleChange={this.handleChange}
           inputText={this.state.inputText}
-          currentConvoID={this.state.currentConvoID}
-          // currentConvoID={this.props.currentConvoID}
+          // currentConvoID={this.state.currentConvoID}
+          currentConvoID={this.props.currentConvoID}
         />
       </div>
     )
