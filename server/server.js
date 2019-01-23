@@ -39,6 +39,25 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+app.listen(port, () => console.log(`Listening on port ${port}`));
+
+
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-TypeError, Accept"
+  );
+  next();
+});
+
+app.get("/allItems", itemsController.getAllItems, (req, res, err) => {
+  res.status(200).json(res.locals.items);
+});
+
 //=========================================================================
 //WEB SOCKETS
 
@@ -49,15 +68,6 @@ io.on("connection", (socket) => {
     console.log(data, socket.id);
     socket.emit('server-connect', 'Hey from server');
   })
-
-  app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-TypeError, Accept"
-    );
-    next();
-  });
 
   app.get("/login", (req, res) => {
     res.status(200);
@@ -86,10 +96,6 @@ io.on("connection", (socket) => {
       res.status(200).json(res.locals.category);
     }
   );
-
-  app.get("/allItems", itemsController.getAllItems, (req, res, err) => {
-    res.status(200).json(res.locals.items);
-  });
 
   app.get("/convos/:userId", messagingController.getConvos, (req, res, err) => {
     res.status(200).json(res.locals.convos);
@@ -137,4 +143,4 @@ io.on("connection", (socket) => {
 
 app.use(express.static(path.resolve(__dirname, "../build")));
 
-http.listen(port, () => console.log(`Listening on port ${port}`));
+http.listen(5000, () => console.log(`Listening on port 5000`));

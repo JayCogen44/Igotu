@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => ({
 class MessagesContainer extends Component {
   constructor(props) {
     super(props);
-    this.socket = io('http://192.168.0.219:3000');
+    this.socket = io('http://192.168.0.219:5000');
     this.state = {
       inputText: ''
     }
