@@ -31,10 +31,8 @@ const styleString = `background-image: url({props.info.photo})`
 // };
 
 const Card = (props) => {
-  console.log('in cards for item', props.info.item_name)
   const  styles = {backgroundImage: 'url(' + props.info.photo + ')',}
   return (
-
     <div className="card col-3">
         <div className="card-container">
             <div className="card-image" style={styles}></div>
@@ -47,7 +45,6 @@ const Card = (props) => {
 
         </div>
     </div>
-
   )
 };
 
