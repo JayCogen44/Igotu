@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import MessagesContainer from './MessagesContainer.jsx';
 import CardsContainer from './CardsContainer.jsx';
+import MoreInfoContainer from './MoreInfoContainer.jsx';
 
 class MainContainer extends Component {
   constructor(props) {
@@ -26,6 +27,10 @@ class MainContainer extends Component {
           <Route 
             exact path="/messages"
             component={MessagesContainer}
+          />
+          <Route 
+            exact path="/item/:id"
+            component={MoreInfoContainer}
           />
         </Switch>
       </div>
