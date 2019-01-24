@@ -42,8 +42,6 @@ class MessagesContainer extends Component {
   connectToSocket = (connect) => {
     if (connect === true) {
       this.socket.on('connect', () => {
-
-        //const socket = io('http://192.168.0.219:3000');
         console.log(`Connected. ID: ${this.socket.id}`)
         this.socket.emit('client-connect', 'Hey from client');
         this.socket.on('server-connect', (data) => {
@@ -81,6 +79,11 @@ class MessagesContainer extends Component {
     this.connectToSocket(true);
   }
 
+  componentDidUpdate() {
+    const messageWrapper = document.getElementById('messages');
+    messageWrapper.scrollTop = messageWrapper.scrollHeight;
+  }
+
   componentWillUnmount() {
     this.connectToSocket(false);
   }
@@ -90,6 +93,7 @@ class MessagesContainer extends Component {
       <div className="messages-container">
         <ConvosComponent
           convos={this.props.convos}
+          currentConvoID={this.props.currentConvoID}
           handleConvoChange={this.handleConvoChange}
         />
         <MessagesComponent

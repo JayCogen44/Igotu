@@ -7,7 +7,8 @@ import ItemForm from '../components/ItemForm.jsx'
 import * as actions from '../actions/actions';
 
 const mapStateToProps = store => ({
-  cards: store.cards
+  cards: store.cards,
+  showModal: store.convos.showModal
 });
 
 // need to add all our action creators here
@@ -42,12 +43,12 @@ class CardsContainer extends Component {
   render() {
     return (
       <div>
-        <CardsComponent 
+        <CardsComponent
           items={this.props.cards.items}
           fetchFlag={this.props.cards.fetching}
           loading={this.props}
         />
-        <ItemForm addItem={this.props.addItem} />
+        <ItemForm addItem={this.props.addItem} showModal={this.props.showModal} />
       </div>
     );
   }

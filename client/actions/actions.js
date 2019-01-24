@@ -34,6 +34,10 @@ export const addOneMessageToCurrentMessages = message => ({
   payload: message
 });
 
+export const toggleAddItemModal = () => ({
+  type: types.TOGGLE_MODAL
+});
+
 export const fetchItemsData = () => dispatch => {
   dispatch(fetchItemsStart());
   fetch('api/allItems')
@@ -72,6 +76,7 @@ export const addItem = userObj => dispatch => {
         type: types.ADDED_ITEM,
         payload: data
       });
+      dispatch(toggleAddItemModal());
     })
     .catch(() => dispatch(fetchError));
 };
@@ -87,7 +92,10 @@ export const getConvos = () => (dispatch, getState) => {
   console.log('userID', userID)
   fetch(`api/convos/${userID}`)
     .then(response => response.json())
-    .then(convos => dispatch(showConvos(convos)))
+    .then(convos => {
+      dispatch(showConvos(convos));
+      dispatch(getMessagesForAConvo(convos[0].id));
+    })
     .catch(() => dispatch(fetchError));
 }
 
