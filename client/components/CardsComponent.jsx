@@ -12,26 +12,7 @@ const CardsComponent = props => {
 
   const cards = props.items.map(createCard);
 
-  const cardRows = [];
 
-  let counter = 0;
-
-  for (let i = 0; i <= cards.length / 4; i++) {
-    const currentCards = [];
-
-    for (let j = 0; j < 4; j++) {
-      currentCards.push(cards[counter]);
-      counter++;
-    }
-
-    const currentRow = (
-      <div className="row" key={uuid()}>
-        {' '}
-        {currentCards}
-      </div>
-    );
-    cardRows.push(currentRow);
-  }
 
   let Loading;
 
@@ -50,8 +31,9 @@ const CardsComponent = props => {
 
   return (
     <div className="card-container">
-      {Loading}
-      {cardRows}
+      {/* {Loading} */}
+      {cards}
+      <div style={{ 'clear': 'both' }}></div>
     </div>
   );
 };

@@ -10,3 +10,4 @@ export const ADDED_ITEM = 'ADDED_ITEM';
 export const SHOW_CONVOS = 'SHOW_CONVOS';
 export const SHOW_CONVO_MESSAGES = 'SHOW_CONVO_MESSAGES';
 export const ADD_ONE_MESSAGE = 'ADD_ONE_MESSAGE';
+export const TOGGLE_MODAL = 'TOGGLE_MODAL';

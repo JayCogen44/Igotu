@@ -41,7 +41,10 @@ const Navigation = props => (
       </div>
       {/* NAV RIGHT */}
       <div className="nav-right">
-        <div className="nav-item has-sub toggle-hover" id="dropdown">
+
+        <button className='add-item' onClick={props.toggleAddItemModal}>+</button>
+
+        {/* <div className="nav-item has-sub toggle-hover" id="dropdown">
           <a className="nav-dropdown-link">Categories</a>
           <ul className="dropdown-menu dropdown-animated" role="menu">
             <li role="menu-item">
@@ -82,7 +85,7 @@ const Navigation = props => (
               <center>Toys</center>
             </li>
           </ul>
-        </div>
+        </div>*/}
       </div>
     </div>
   </div>

@@ -24,6 +24,9 @@ const mapDispatchToProps = dispatch => ({
   },
   fetchCategory: value => {
     dispatch(actions.fetchCategoryItems(value));
+  },
+  toggleAddItemModal: () => {
+    dispatch(actions.toggleAddItemModal());
   }
 });
 
@@ -41,6 +44,7 @@ class NavigationContainer extends Component {
           fetchCategory={this.props.fetchCategory}
           searchValue={this.props.cards.searchBoxValue}
           searchBoxChange={this.props.searchBoxChange}
+          toggleAddItemModal={this.props.toggleAddItemModal}
         />
       </div>
     )

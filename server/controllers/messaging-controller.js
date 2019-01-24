@@ -75,8 +75,15 @@ messagingController.createConvo = (req, res, next) => {
 
 messagingController.createMessage = (req, res, next) => {
     const query = {
-        text: `INSERT INTO messages(convo_id, user_sent_id, message, created_at)
-               VALUES($1,$2,$3,$4) RETURNING *`,
+        text: `WITH inserted AS (
+                    INSERT INTO messages(convo_id, user_sent_id, message, created_at)
+                    VALUES($1,$2,$3,$4) 
+                    RETURNING *
+                )
+                SELECT users.user_name, inserted.message, inserted.created_at, inserted.id, inserted.convo_id  
+                FROM inserted
+                INNER JOIN users
+                ON (inserted.user_sent_id = users.id)`,
         values: [
             req.body.convo_id,
             req.body.user_sent_id,

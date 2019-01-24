@@ -85,6 +85,14 @@ app.get("/allItems", itemsController.getAllItems, (req, res, err) => {
   res.status(200).json(res.locals.items);
 });
 
+app.post("/addUser", userController.addUser, (req, res, err) => {
+  res.status(200).json(res.locals.data);
+});
+
+app.post("/addItem", itemsController.addItem, (req, res, err) => {
+  res.status(200).json(res.locals.data);
+});
+
 //=========================================================================
 //WEB SOCKETS
 
@@ -138,13 +146,7 @@ io.on("connection", (socket) => {
 
   /* POST REQUESTS */
 
-  app.post("/addUser", userController.addUser, (req, res, err) => {
-    res.status(200).json(res.locals.data);
-  });
 
-  app.post("/addItem", itemsController.addItem, (req, res, err) => {
-    res.status(200).json(res.locals.data);
-  });
 
   app.post("/addConvo", messagingController.createConvo, (req, res, err) => {
     res.status(200).json(res.locals.convo);
