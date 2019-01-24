@@ -8,7 +8,8 @@ import * as actions from '../actions/actions';
 
 const mapStateToProps = store => ({
   cards: store.cards,
-  currentUserID: store.cards.user.id
+  currentUserID: store.cards.user.id,
+  showModal: store.convos.showModal
 });
 
 // need to add all our action creators here
@@ -53,14 +54,14 @@ class CardsContainer extends Component {
     console.log(this.props.cards);
     return (
       <div>
-        <CardsComponent 
+        <CardsComponent
           items={this.props.cards.items}
           fetchFlag={this.props.cards.fetching}
           loading={this.props}
           handleConvoCreate={this.handleConvoCreate}
           currentUserID={this.props.currentUserID}
         />
-        <ItemForm addItem={this.props.addItem} />
+        <ItemForm addItem={this.props.addItem} showModal={this.props.showModal} />
       </div>
     );
   }

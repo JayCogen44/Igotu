@@ -14,7 +14,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <NavigationContainer/>
+          <NavigationContainer />
           <MainContainer />
         </div>
       </Router>

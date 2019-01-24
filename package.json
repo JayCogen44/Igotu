@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "nodemon server/server.js",
+    "start:client": "webpack-dev-server --mode development --open --host 192.168.0.119 --port 8080",
     "start:dev": "webpack-dev-server --mode development --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

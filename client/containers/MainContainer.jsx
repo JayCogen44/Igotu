@@ -20,11 +20,11 @@ class MainContainer extends Component {
     return (
       <div>
         <Switch>
-          <Route 
+          <Route
             exact path="/"
             component={CardsContainer}
           />
-          <Route 
+          <Route
             exact path="/messages"
             component={MessagesContainer}
           />

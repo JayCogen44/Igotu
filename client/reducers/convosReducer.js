@@ -4,7 +4,8 @@ import * as types from '../constants/actionTypes';
 const initialState = {
   convosArr: [],
   messagesArr: [],
-  currentConvoID: 0
+  currentConvoID: 0,
+  showModal: false
 };
 
 const convosReducer = (state = initialState, action) => {
@@ -28,6 +29,11 @@ const convosReducer = (state = initialState, action) => {
       return {
         ...state,
         messagesArr
+      }
+    case types.TOGGLE_MODAL:
+      return {
+        ...state,
+        showModal: !state.showModal
       }
     default:
       return state;
