@@ -8,6 +8,7 @@ import * as actions from '../actions/actions';
 
 const mapStateToProps = store => ({
   cards: store.cards,
+  currentUserID: store.cards.user.id,
   showModal: store.convos.showModal
 });
 
@@ -27,7 +28,10 @@ const mapDispatchToProps = dispatch => ({
       photo: addItemForm.elements.url.value,
     }
     dispatch(actions.addItem(formData))
-  }
+  },
+  postConvo: (convoObj) => {
+    dispatch(actions.postConvo(convoObj))
+  } 
 });
 
 class CardsContainer extends Component {
@@ -36,17 +40,26 @@ class CardsContainer extends Component {
 
   }
 
+  handleConvoCreate = (convoObj) => {
+    console.log('convoObj from handle', convoObj);
+    this.props.postConvo(convoObj);
+    this.props.history.push('/messages');
+  }
+ 
   componentWillMount() {
     this.props.fetchAllItems();
   }
 
   render() {
+    console.log(this.props.cards);
     return (
       <div>
         <CardsComponent
           items={this.props.cards.items}
           fetchFlag={this.props.cards.fetching}
           loading={this.props}
+          handleConvoCreate={this.handleConvoCreate}
+          currentUserID={this.props.currentUserID}
         />
         <ItemForm addItem={this.props.addItem} showModal={this.props.showModal} />
       </div>

@@ -7,7 +7,8 @@ const uuid = require('uuid/v1');
 const CardsComponent = props => {
 
   const createCard = item => {
-    return <Card key={uuid()} info={item} />;
+    console.log('itemID:', item.id)
+    return <Card key={uuid()} item_id={item.id} user_renter_id={props.currentUserID} user_owner_id={item.user_id} info={item} handleConvoCreate={props.handleConvoCreate} />;
   };
 
   const cards = props.items.map(createCard);

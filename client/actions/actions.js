@@ -107,6 +107,7 @@ export const getMessagesForAConvo = (convoID) => (dispatch, getState) => {
 }
 
 export const postConvo = (convoObj) => (dispatch, getState) => {
+  console.log("called", convoObj);
   fetch(`api/addConvo`, {
     headers: { 'Content-Type': 'application/json' },
     mode: 'cors',
